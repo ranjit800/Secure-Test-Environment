@@ -13,7 +13,18 @@ connectDB();
 
 // Middleware
 app.use(helmet()); // Security headers
-app.use(cors()); // Enable CORS
+
+// CORS Configuration
+const corsOptions = {
+  origin: [
+    'http://localhost:5173', // Local development
+    'https://secure-test-environment-three.vercel.app' // Production frontend
+  ],
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
+
 app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 
