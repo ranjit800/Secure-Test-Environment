@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { AlertTriangle } from 'lucide-react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import EventLogModal from '../components/EventLogModal';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
@@ -214,84 +214,13 @@ const DashboardPage = () => {
       </div>
 
       {/* Events Modal */}
-      {selectedAttempt && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-6 z-50" onClick={closeModal}>
-          <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[80vh] overflow-hidden" onClick={(e) => e.stopPropagation()}>
-            {/* Modal Header */}
-            <div className="px-6 py-4 border-b border-zinc-200 flex justify-between items-center">
-              <div>
-                <h3 className="text-xl font-bold text-black">Event Log</h3>
-                <p className="text-sm text-zinc-500">
-                  {selectedAttempt.studentName} ({selectedAttempt.username}) - {selectedAttempt.assessmentId}
-                </p>
-              </div>
-              <button 
-                onClick={closeModal}
-                className="text-zinc-500 hover:text-black transition-colors"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-
-            {/* Modal Body */}
-            <div className="p-6 overflow-y-auto max-h-[calc(80vh-120px)]">
-              {loadingEvents ? (
-                <div className="text-center py-8">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-black mx-auto"></div>
-                  <p className="text-zinc-500 mt-2">Loading events...</p>
-                </div>
-              ) : events.length === 0 ? (
-                <div className="text-center py-8">
-                  <p className="text-zinc-500">No events recorded</p>
-                </div>
-              ) : (
-                <div className="space-y-3">
-                  {events.map((event, index) => {
-                    const isViolation = ['TAB_SWITCH', 'WINDOW_BLUR', 'FULLSCREEN_EXIT', 'COPY_ATTEMPT', 'PASTE_ATTEMPT', 'CONTEXT_MENU'].includes(event.eventType);
-                    return (
-                      <div 
-                        key={event._id || index}
-                        className={`p-4 rounded-lg border ${
-                          isViolation 
-                            ? 'border-red-200 bg-red-50' 
-                            : 'border-zinc-200 bg-zinc-50'
-                        }`}
-                      >
-                        <div className="flex justify-between items-start mb-2">
-                          <div className="flex items-center gap-2">
-                            <span className={`px-2 py-1 text-xs font-bold rounded ${
-                              isViolation 
-                                ? 'bg-red-600 text-white' 
-                                : 'bg-zinc-600 text-white'
-                            }`}>
-                              {event.eventType.replace(/_/g, ' ')}
-                            </span>
-                            {isViolation && (
-                              <AlertTriangle className="w-4 h-4 text-red-600" />
-                            )}
-                          </div>
-                          <span className="text-xs text-zinc-500">
-                            {new Date(event.timestamp).toLocaleString()}
-                          </span>
-                        </div>
-                        {event.metadata && Object.keys(event.metadata).length > 0 && (
-                          <div className="text-xs text-zinc-600 mt-2">
-                            <pre className="bg-white p-2 rounded border border-zinc-200 overflow-x-auto">
-                              {JSON.stringify(event.metadata, null, 2)}
-                            </pre>
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
+      <EventLogModal
+        isOpen={!!selectedAttempt}
+        onClose={closeModal}
+        attempt={selectedAttempt}
+        events={events}
+        loading={loadingEvents}
+      />
     </div>
   );
 };
