@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GraduationCap, Lock } from 'lucide-react';
+import { GraduationCap, Lock, AlertTriangle } from 'lucide-react';
 import useTestStore from '../store/testStore';
 import { apiService } from '../services/apiService';
 import { eventLogger } from '../services/eventLogger';
@@ -158,6 +158,17 @@ const StartPage = () => {
           <div className="text-center mb-12">
             <h1 className="text-5xl font-black text-white mb-4">Secure Assessment Platform</h1>
             <p className="text-zinc-400 text-lg">Choose your access type</p>
+            
+            {/* Cold Start Notice */}
+            <div className="mt-6 mx-auto max-w-2xl bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4">
+              <div className="flex items-center justify-center gap-2 text-yellow-400 text-sm">
+                <AlertTriangle className="w-5 h-5 flex-shrink-0" />
+                <p>
+                  <span className="font-bold">First-time loading notice:</span> Our backend is hosted on Render's free tier. 
+                  The first request may take 50+ seconds as the server wakes up. Subsequent requests will be fast.
+                </p>
+              </div>
+            </div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
