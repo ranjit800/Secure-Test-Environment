@@ -204,23 +204,24 @@ const TestPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-zinc-900 to-black p-6">
+    <div className="min-h-screen bg-gradient-to-br from-black via-zinc-900 to-black p-3 sm:p-6">
       <Timer onTimeUp={handleTimeUp} duration={300} />
       
       {/* Fullscreen Warning Banner */}
       {showFullscreenBanner && (
-        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-red-600 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 animate-pulse">
-          <AlertTriangle className="w-6 h-6" />
-          <div>
-            <p className="font-bold">Fullscreen Required!</p>
-            <p className="text-sm">Click below to re-enter fullscreen</p>
+        <div className="fixed top-4 sm:top-20 left-1/2 -translate-x-1/2 z-50 bg-red-600 text-white px-4 sm:px-6 py-3 sm:py-4 rounded-xl sm:rounded-2xl shadow-2xl flex flex-col sm:flex-row items-center gap-2 sm:gap-4 animate-pulse max-w-[90vw]">
+          <AlertTriangle className="w-5 h-5 sm:w-6 sm:h-6" />
+          <div className="text-center sm:text-left">
+            <p className="font-bold text-sm sm:text-base">Fullscreen Required!</p>
+            <p className="text-xs sm:text-sm">Click below to re-enter fullscreen</p>
           </div>
           <button
             onClick={handleEnterFullscreen}
-            className="ml-4 bg-white text-red-600 px-4 py-2 rounded-lg font-bold hover:bg-zinc-100 transition-all flex items-center gap-2"
+            className="sm:ml-4 bg-white text-red-600 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-sm font-bold hover:bg-zinc-100 transition-all flex items-center gap-2"
           >
             <Maximize className="w-4 h-4" />
-            Enter Fullscreen
+            <span className="hidden sm:inline">Enter Fullscreen</span>
+            <span className="sm:hidden">Enter</span>
           </button>
         </div>
       )}
@@ -228,17 +229,17 @@ const TestPage = () => {
       {/* Violation Counter */}
       {/* Removed - violations tracked internally */}
       
-      <div className="max-w-4xl mx-auto pt-20">
+      <div className="max-w-4xl mx-auto pt-12 sm:pt-20">
         {/* Header */}
-        <div className="bg-white rounded-2xl p-6 mb-6 shadow-2xl">
+        <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-4 sm:mb-6 shadow-2xl">
           <div className="flex justify-between items-center">
             <div>
-              <h2 className="text-2xl font-black text-black">Web Development Quiz</h2>
-              <p className="text-zinc-500">Question {currentIndex + 1} of {questions.length}</p>
+              <h2 className="text-lg sm:text-xl md:text-2xl font-black text-black">Web Development Quiz</h2>
+              <p className="text-xs sm:text-sm text-zinc-500">Question {currentIndex + 1} of {questions.length}</p>
             </div>
             <div className="text-right">
-              <p className="text-sm text-zinc-500">Answered</p>
-              <p className="text-3xl font-black text-black">{answeredCount}/{questions.length}</p>
+              <p className="text-xs sm:text-sm text-zinc-500">Answered</p>
+              <p className="text-2xl sm:text-3xl font-black text-black">{answeredCount}/{questions.length}</p>
             </div>
           </div>
           
@@ -252,19 +253,19 @@ const TestPage = () => {
         </div>
 
         {/* Question Card */}
-        <div className="bg-white rounded-2xl p-8 shadow-2xl mb-6">
-          <div className="mb-6">
-            <span className="bg-black text-white px-3 py-1 rounded-full text-sm font-bold">
+        <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 shadow-2xl mb-4 sm:mb-6">
+          <div className="mb-4 sm:mb-6">
+            <span className="bg-black text-white px-2.5 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-bold">
               Question {currentIndex + 1}
             </span>
           </div>
           
-          <h3 className="text-2xl font-bold text-black mb-8">
+          <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-black mb-6 sm:mb-8">
             {currentQuestion?.question}
           </h3>
 
           {/* Options */}
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {currentQuestion && Object.entries(currentQuestion.options).map(([key, value]) => {
               const isSelected = answers[currentQuestion.id] === key;
               return (
@@ -272,7 +273,7 @@ const TestPage = () => {
                   key={key}
                   onClick={() => handleAnswer(currentQuestion.id, key)}
                   disabled={!isFullscreen}
-                  className={`w-full p-5 rounded-xl border-2 text-left transition-all ${
+                  className={`w-full p-3 sm:p-4 md:p-5 rounded-lg sm:rounded-xl border-2 text-left transition-all ${
                     !isFullscreen
                       ? 'opacity-50 cursor-not-allowed border-zinc-300 bg-zinc-100 text-zinc-500'
                       : isSelected
@@ -280,15 +281,15 @@ const TestPage = () => {
                         : 'border-zinc-200 bg-white text-black hover:border-black'
                   }`}
                 >
-                  <div className="flex items-center gap-4">
-                    <span className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <span className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center font-bold text-xs sm:text-sm flex-shrink-0 ${
                       !isFullscreen
                         ? 'bg-zinc-200 text-zinc-400'
                         : isSelected ? 'bg-white text-black' : 'bg-zinc-100 text-black'
                     }`}>
                       {key}
                     </span>
-                    <span className="font-medium">{value}</span>
+                    <span className="font-medium text-sm sm:text-base">{value}</span>
                   </div>
                 </button>
               );
@@ -297,22 +298,23 @@ const TestPage = () => {
         </div>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center gap-4">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
           <button
             onClick={() => setCurrentIndex(prev => Math.max(0, prev - 1))}
             disabled={currentIndex === 0}
-            className="flex items-center gap-2 px-6 py-3 bg-white text-black rounded-xl font-bold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-zinc-100 transition-all"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-white text-black rounded-lg sm:rounded-xl text-sm sm:text-base font-bold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-zinc-100 transition-all"
           >
-            <ChevronLeft className="w-5 h-5" />
-            Previous
+            <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+            <span className="hidden sm:inline">Previous</span>
+            <span className="sm:hidden">Prev</span>
           </button>
 
-          <div className="flex gap-2">
+          <div className="flex gap-1.5 sm:gap-2 overflow-x-auto max-w-full px-1 py-1">
             {questions.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => setCurrentIndex(idx)}
-                className={`w-10 h-10 rounded-lg font-bold text-sm transition-all ${
+                className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg font-bold text-xs sm:text-sm transition-all flex-shrink-0 ${
                   idx === currentIndex
                     ? 'bg-black text-white'
                     : answers[questions[idx]?.id]
@@ -328,19 +330,20 @@ const TestPage = () => {
           {isLastQuestion ? (
             <button
               onClick={() => setShowSubmitModal(true)}
-              className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-xl font-bold hover:bg-green-700 transition-all shadow-lg"
+              className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-green-600 text-white rounded-lg sm:rounded-xl text-sm sm:text-base font-bold hover:bg-green-700 transition-all shadow-lg"
             >
-              <Send className="w-5 h-5" />
+              <Send className="w-4 h-4 sm:w-5 sm:h-5" />
               Submit
             </button>
           ) : (
             <button
               onClick={() => setCurrentIndex(prev => Math.min(questions.length - 1, prev + 1))}
               disabled={currentIndex === questions.length - 1}
-              className="flex items-center gap-2 px-6 py-3 bg-white text-black rounded-xl font-bold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-zinc-100 transition-all"
+              className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-white text-black rounded-lg sm:rounded-xl text-sm sm:text-base font-bold disabled:opacity-50 disabled:cursor-not-allowed hover:bg-zinc-100 transition-all"
             >
-              Next
-              <ChevronRight className="w-5 h-5" />
+              <span className="hidden sm:inline">Next</span>
+              <span className="sm:hidden">Next</span>
+              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
           )}
         </div>
@@ -348,27 +351,27 @@ const TestPage = () => {
 
       {/* Submit Confirmation Modal */}
       {showSubmitModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-6 z-50">
-          <div className="bg-white rounded-2xl p-8 max-w-md w-full">
-            <h3 className="text-2xl font-black text-black mb-4">Submit Assessment?</h3>
-            <p className="text-zinc-600 mb-2">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 sm:p-6 z-50">
+          <div className="bg-white rounded-xl sm:rounded-2xl p-6 sm:p-8 max-w-md w-full">
+            <h3 className="text-xl sm:text-2xl font-black text-black mb-3 sm:mb-4">Submit Assessment?</h3>
+            <p className="text-sm sm:text-base text-zinc-600 mb-2">
               You have answered <span className="font-bold">{answeredCount}</span> out of <span className="font-bold">{questions.length}</span> questions.
             </p>
             {answeredCount < questions.length && (
-              <p className="text-yellow-600 font-bold mb-6">
+              <p className="text-sm sm:text-base text-yellow-600 font-bold mb-4 sm:mb-6">
                 ⚠️ You have unanswered questions!
               </p>
             )}
-            <div className="flex gap-4">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <button
                 onClick={() => setShowSubmitModal(false)}
-                className="flex-1 px-6 py-3 bg-zinc-200 text-black rounded-xl font-bold hover:bg-zinc-300 transition-all"
+                className="flex-1 px-4 sm:px-6 py-2.5 sm:py-3 bg-zinc-200 text-black rounded-lg sm:rounded-xl text-sm sm:text-base font-bold hover:bg-zinc-300 transition-all"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSubmit}
-                className="flex-1 px-6 py-3 bg-black text-white rounded-xl font-bold hover:bg-zinc-800 transition-all"
+                className="flex-1 px-4 sm:px-6 py-2.5 sm:py-3 bg-black text-white rounded-lg sm:rounded-xl text-sm sm:text-base font-bold hover:bg-zinc-800 transition-all"
               >
                 Submit Now
               </button>
