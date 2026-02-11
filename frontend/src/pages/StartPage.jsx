@@ -60,8 +60,9 @@ const StartPage = () => {
       
       toast.success(`Welcome, ${user.name}!`);
       
-      // Directly start test (bypass instructions for now)
-      await handleStartTest(user);
+      // Show instructions before starting test
+      setPendingUser(user);
+      setShowInstructions(true);
       
     } catch (error) {
       console.error(error);
@@ -311,13 +312,13 @@ const StartPage = () => {
           </div>
         </div>
 
-        {/* Test Instructions Modal - Temporarily disabled for debugging */}
-        {/* {showInstructions && (
+        {/* Test Instructions Modal */}
+        {showInstructions && (
           <TestInstructions
             onStart={handleInstructionsConfirm}
             onCancel={handleInstructionsCancel}
           />
-        )} */}
+        )}
       </div>
     );
   }

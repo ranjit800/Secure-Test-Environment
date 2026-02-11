@@ -1,4 +1,4 @@
-import { AlertTriangle, Eye, Copy, MousePointer2, Monitor, Maximize } from 'lucide-react';
+import { AlertTriangle, Eye, Copy, MousePointer2, Monitor, Maximize, FileText, ShieldAlert, CheckCircle2 } from 'lucide-react';
 
 const TestInstructions = ({ onStart, onCancel }) => {
   return (
@@ -19,14 +19,18 @@ const TestInstructions = ({ onStart, onCancel }) => {
         <div className="p-6 space-y-6">
           {/* Important Notice */}
           <div className="bg-yellow-50 border-2 border-yellow-400 rounded-xl p-4">
-            <p className="text-yellow-900 font-bold text-sm">
-              ⚠️ This is a <span className="underline">monitored assessment</span>. All activities are tracked and violations will be recorded.
+            <p className="text-yellow-900 font-bold text-sm flex items-center gap-2">
+              <AlertTriangle className="w-4 h-4 flex-shrink-0" />
+              This is a <span className="underline">monitored assessment</span>. All activities are tracked and violations will be recorded.
             </p>
           </div>
 
           {/* Test Details */}
           <div className="bg-zinc-50 rounded-xl p-4">
-            <h3 className="font-bold text-black mb-2">📝 Test Details:</h3>
+            <h3 className="font-bold text-black mb-2 flex items-center gap-2">
+              <FileText className="w-5 h-5" />
+              Test Details:
+            </h3>
             <ul className="space-y-1 text-sm text-zinc-700">
               <li>• <span className="font-semibold">Questions:</span> 10 multiple-choice questions</li>
               <li>• <span className="font-semibold">Time Limit:</span> 5 minutes (auto-submits when time is up)</li>
@@ -86,7 +90,10 @@ const TestInstructions = ({ onStart, onCancel }) => {
 
           {/* Consequences */}
           <div className="bg-orange-50 border border-orange-300 rounded-xl p-4">
-            <h3 className="font-bold text-orange-900 mb-2">⚠️ Consequences:</h3>
+            <h3 className="font-bold text-orange-900 mb-2 flex items-center gap-2">
+              <ShieldAlert className="w-5 h-5" />
+              Consequences:
+            </h3>
             <ul className="text-sm text-orange-800 space-y-1">
               <li>• All violations are <span className="font-bold">permanently logged</span></li>
               <li>• Administrators can view all violation events</li>
@@ -96,7 +103,10 @@ const TestInstructions = ({ onStart, onCancel }) => {
 
           {/* Tips */}
           <div className="bg-green-50 border border-green-300 rounded-xl p-4">
-            <h3 className="font-bold text-green-900 mb-2">✓ Tips for Success:</h3>
+            <h3 className="font-bold text-green-900 mb-2 flex items-center gap-2">
+              <CheckCircle2 className="w-5 h-5" />
+              Tips for Success:
+            </h3>
             <ul className="text-sm text-green-800 space-y-1">
               <li>• Close all other applications before starting</li>
               <li>• Disable notifications on your computer</li>

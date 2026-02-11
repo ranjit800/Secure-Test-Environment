@@ -180,6 +180,11 @@ const TestPage = () => {
   };
 
   const handleAnswer = (questionId, option) => {
+    // Only allow answers when in fullscreen
+    if (!isFullscreen) {
+      toast.error('Please enter fullscreen to answer questions!');
+      return;
+    }
     setAnswer(questionId, option);
   };
 
@@ -266,15 +271,20 @@ const TestPage = () => {
                 <button
                   key={key}
                   onClick={() => handleAnswer(currentQuestion.id, key)}
+                  disabled={!isFullscreen}
                   className={`w-full p-5 rounded-xl border-2 text-left transition-all ${
-                    isSelected
-                      ? 'border-black bg-black text-white'
-                      : 'border-zinc-200 bg-white text-black hover:border-black'
+                    !isFullscreen
+                      ? 'opacity-50 cursor-not-allowed border-zinc-300 bg-zinc-100 text-zinc-500'
+                      : isSelected
+                        ? 'border-black bg-black text-white'
+                        : 'border-zinc-200 bg-white text-black hover:border-black'
                   }`}
                 >
                   <div className="flex items-center gap-4">
                     <span className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${
-                      isSelected ? 'bg-white text-black' : 'bg-zinc-100 text-black'
+                      !isFullscreen
+                        ? 'bg-zinc-200 text-zinc-400'
+                        : isSelected ? 'bg-white text-black' : 'bg-zinc-100 text-black'
                     }`}>
                       {key}
                     </span>
