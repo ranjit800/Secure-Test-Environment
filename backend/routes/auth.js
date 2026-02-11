@@ -73,4 +73,50 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// @desc    Create Admin User (Protected with Secret Key)
+// @route   POST /api/auth/create-admin
+// @access  Protected (requires ADMIN_SECRET_KEY)
+router.post('/create-admin', async (req, res) => {
+  const { name, email, password, secretKey } = req.body;
+
+  try {
+    // Verify secret key
+    const ADMIN_SECRET = process.env.ADMIN_SECRET_KEY || 'super-secret-admin-key-2024';
+    if (secretKey !== ADMIN_SECRET) {
+      return res.status(403).json({ message: 'Invalid secret key. Unauthorized.' });
+    }
+
+    // Check if admin already exists
+    const adminExists = await User.findOne({ email });
+    if (adminExists) {
+      return res.status(400).json({ message: 'Admin with this email already exists' });
+    }
+
+    // Create admin user
+    const admin = await User.create({
+      name,
+      email,
+      username: email, // Use email as username for admin
+      password,
+      role: 'admin'
+    });
+
+    if (admin) {
+      res.status(201).json({
+        message: 'Admin created successfully',
+        admin: {
+          _id: admin._id,
+          name: admin.name,
+          email: admin.email,
+          role: admin.role
+        }
+      });
+    } else {
+      res.status(400).json({ message: 'Invalid admin data' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = router;
