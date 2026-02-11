@@ -41,3 +41,9 @@ Thumbs.db
 # Development files
 plan.md
 *.md.backup
+
+# Deployment and setup documentation (keep README.md)
+API_DOCUMENTATION.md
+DEPLOYMENT.md
+RENDER_ENV_SETUP.md
+VERCEL_DEPLOYMENT.md
