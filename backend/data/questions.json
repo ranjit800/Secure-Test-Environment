@@ -1,0 +1,112 @@
+[
+    {
+        "id": 1,
+        "question": "What does HTML stand for?",
+        "options": {
+            "A": "Hyper Text Markup Language",
+            "B": "High Tech Modern Language",
+            "C": "Home Tool Markup Language",
+            "D": "Hyperlinks and Text Markup Language"
+        },
+        "correctAnswer": "A"
+    },
+    {
+        "id": 2,
+        "question": "Which CSS property is used to change the text color?",
+        "options": {
+            "A": "font-color",
+            "B": "text-color",
+            "C": "color",
+            "D": "text-style"
+        },
+        "correctAnswer": "C"
+    },
+    {
+        "id": 3,
+        "question": "What is the correct syntax for referring to an external JavaScript file?",
+        "options": {
+            "A": "<script href='app.js'>",
+            "B": "<script src='app.js'>",
+            "C": "<script name='app.js'>",
+            "D": "<script file='app.js'>"
+        },
+        "correctAnswer": "B"
+    },
+    {
+        "id": 4,
+        "question": "Which HTTP method is used to submit form data?",
+        "options": {
+            "A": "GET",
+            "B": "POST",
+            "C": "PUT",
+            "D": "DELETE"
+        },
+        "correctAnswer": "B"
+    },
+    {
+        "id": 5,
+        "question": "In React, what hook is used for side effects?",
+        "options": {
+            "A": "useState",
+            "B": "useEffect",
+            "C": "useContext",
+            "D": "useReducer"
+        },
+        "correctAnswer": "B"
+    },
+    {
+        "id": 6,
+        "question": "Which database is a NoSQL database?",
+        "options": {
+            "A": "MySQL",
+            "B": "PostgreSQL",
+            "C": "MongoDB",
+            "D": "SQLite"
+        },
+        "correctAnswer": "C"
+    },
+    {
+        "id": 7,
+        "question": "What does API stand for?",
+        "options": {
+            "A": "Application Programming Interface",
+            "B": "Advanced Programming Interface",
+            "C": "Application Process Integration",
+            "D": "Automated Programming Instruction"
+        },
+        "correctAnswer": "A"
+    },
+    {
+        "id": 8,
+        "question": "Which status code indicates a successful HTTP request?",
+        "options": {
+            "A": "404",
+            "B": "500",
+            "C": "200",
+            "D": "301"
+        },
+        "correctAnswer": "C"
+    },
+    {
+        "id": 9,
+        "question": "What is the purpose of Git?",
+        "options": {
+            "A": "Database management",
+            "B": "Version control",
+            "C": "Web hosting",
+            "D": "Code compilation"
+        },
+        "correctAnswer": "B"
+    },
+    {
+        "id": 10,
+        "question": "Which JavaScript keyword is used to declare a constant?",
+        "options": {
+            "A": "var",
+            "B": "let",
+            "C": "const",
+            "D": "static"
+        },
+        "correctAnswer": "C"
+    }
+]

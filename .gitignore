@@ -13,11 +13,30 @@ frontend/.env
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Build outputs
+dist
+dist-ssr
+frontend/dist
+frontend/dist-ssr
+*.local
 
 # OS specific
 .DS_Store
 Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
 # IDEs
-.vscode
+.vscode/*
+!.vscode/extensions.json
 .idea
+
+# Development files
+plan.md
+*.md.backup

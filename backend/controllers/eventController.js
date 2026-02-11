@@ -93,15 +93,22 @@ exports.logBatchEvents = async (req, res) => {
     // Update violation counts
     const violationTypes = ['TAB_SWITCH', 'WINDOW_BLUR', 'FULLSCREEN_EXIT', 'COPY_ATTEMPT', 'PASTE_ATTEMPT', 'CONTEXT_MENU', 'DEVTOOLS_DETECTED'];
     
+    console.log(`Processing batch of ${events.length} events`);
+
     for (const attemptId of attemptIds) {
-      const violationEvents = events.filter(e => 
-        e.attemptId === attemptId && violationTypes.includes(e.eventType)
-      );
+      const attemptEvents = events.filter(e => e.attemptId === attemptId);
+      const violationEvents = attemptEvents.filter(e => violationTypes.includes(e.eventType));
+      
+      console.log(`Attempt ${attemptId}: Found ${violationEvents.length} violations out of ${attemptEvents.length} events`);
       
       if (violationEvents.length > 0) {
-        await Attempt.findByIdAndUpdate(attemptId, {
+        console.log('Violation types:', violationEvents.map(e => e.eventType));
+        
+        const updated = await Attempt.findByIdAndUpdate(attemptId, {
           $inc: { violationCount: violationEvents.length }
-        });
+        }, { new: true });
+        
+        console.log(`Updated attempt ${attemptId} violation count to: ${updated ? updated.violationCount : 'null'}`);
       }
     }
 

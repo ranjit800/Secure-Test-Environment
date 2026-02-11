@@ -8,6 +8,8 @@ const useTestStore = create(
       attemptId: null,
       assessmentId: null,
       userId: null,
+      user: null, // Store full user details
+      token: null, // JWT token
       startTime: null,
       isTestActive: false,
       hasStartedTest: false,
@@ -17,16 +19,20 @@ const useTestStore = create(
       violationCount: 0,
       warnings: [],
       
+      answers: {}, // Quiz answers
+      
       focusState: true,
       isFullscreen: false,
       
       currentQuestionId: null,
 
       // Actions
-      startTest: (attemptId, userId, assessmentId) => set({
+      startTest: (attemptId, userId, assessmentId, user, token) => set({
         attemptId,
         userId,
         assessmentId,
+        user, // Store user info
+        token, // Store JWT
         startTime: new Date().toISOString(),
         isTestActive: true,
         violationCount: 0,
@@ -63,10 +69,16 @@ const useTestStore = create(
 
       setCurrentQuestion: (id) => set({ currentQuestionId: id }),
       
+      setAnswer: (questionId, answer) => set((state) => ({
+        answers: { ...state.answers, [questionId]: answer }
+      })),
+      
       resetStore: () => set({
         attemptId: null,
         assessmentId: null,
         userId: null,
+        user: null,
+        token: null,
         startTime: null,
         isTestActive: false,
         hasStartedTest: false,
@@ -74,6 +86,7 @@ const useTestStore = create(
         isSubmitting: false,
         violationCount: 0,
         warnings: [],
+        answers: {},
         focusState: true,
         isFullscreen: false,
         currentQuestionId: null
@@ -84,6 +97,8 @@ const useTestStore = create(
       partialize: (state) => ({ 
         attemptId: state.attemptId,
         userId: state.userId,
+        user: state.user,
+        token: state.token,
         assessmentId: state.assessmentId,
         isTestActive: state.isTestActive,
         hasStartedTest: state.hasStartedTest,

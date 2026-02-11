@@ -4,8 +4,11 @@ const {
   startAttempt,
   submitAttempt,
   getAttempt,
-  getUserAttempts
+  getUserAttempts,
+  getAllAttempts
 } = require('../controllers/attemptController');
+
+const { protect, requireAdmin } = require('../middleware/auth');
 
 // @route   POST /api/attempts/start
 // @desc    Start a new test attempt
@@ -21,6 +24,11 @@ router.put('/:attemptId/submit', submitAttempt);
 // @desc    Get attempt details
 // @access  Public (should be protected in production)
 router.get('/:attemptId', getAttempt);
+
+// @route   GET /api/attempts/all/admin
+// @desc    Get all attempts (admin only)
+// @access  Admin
+router.get('/all/admin', protect, requireAdmin, getAllAttempts);
 
 // @route   GET /api/attempts/user/:userId
 // @desc    Get all attempts for a user

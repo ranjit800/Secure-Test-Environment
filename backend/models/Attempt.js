@@ -5,9 +5,28 @@ const AttemptSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  studentName: String, // Denormalized for easy access
+  username: String,    // Denormalized for easy access
   assessmentId: {
     type: String,
     required: true
+  },
+  answers: {
+    type: Map,
+    of: String,
+    default: {}
+  },
+  score: {
+    type: Number,
+    default: null
+  },
+  correctAnswers: {
+    type: Number,
+    default: 0
+  },
+  totalQuestions: {
+    type: Number,
+    default: 10
   },
   startTime: {
     type: Date,

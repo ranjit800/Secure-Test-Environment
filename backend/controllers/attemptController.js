@@ -13,9 +13,15 @@ exports.startAttempt = async (req, res) => {
       });
     }
 
+    // Fetch user details for denormalization
+    const User = require('../models/User');
+    const user = await User.findById(userId);
+
     // Create new attempt
     const attempt = await Attempt.create({
       userId,
+      studentName: user ? user.name : 'Unknown',
+      username: user ? user.username : 'Unknown',
       assessmentId,
       startTime: new Date(),
       status: 'active',
@@ -50,6 +56,7 @@ exports.startAttempt = async (req, res) => {
 exports.submitAttempt = async (req, res) => {
   try {
     const { attemptId } = req.params;
+    const { violationCount, answers } = req.body; // Accept answers from frontend
 
     const attempt = await Attempt.findById(attemptId);
     
@@ -67,10 +74,36 @@ exports.submitAttempt = async (req, res) => {
       });
     }
 
-    // Update attempt
+    // Grade the answers
+    const questions = require('../data/questions.json');
+    let correctCount = 0;
+    
+    if (answers) {
+      questions.forEach(q => {
+        const userAnswer = answers[q.id.toString()];
+        if (userAnswer === q.correctAnswer) {
+          correctCount++;
+        }
+      });
+    }
+    
+    const score = Math.round((correctCount / questions.length) * 100);
+
+    // Update attempt with score and answers
     attempt.endTime = new Date();
     attempt.status = 'completed';
     attempt.submitted = true;
+    attempt.answers = answers || {};
+    attempt.score = score;
+    attempt.correctAnswers = correctCount;
+    attempt.totalQuestions = questions.length;
+    
+    // Use the violation count from frontend if provided (to fix race condition)
+    if (violationCount !== undefined && violationCount !== null) {
+      attempt.violationCount = violationCount;
+      console.log(`Setting violation count from frontend: ${violationCount}`);
+    }
+    
     await attempt.save();
 
     // Make all events for this attempt immutable
@@ -152,6 +185,29 @@ exports.getUserAttempts = async (req, res) => {
 
   } catch (error) {
     console.error('Error fetching user attempts:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Server error', 
+      error: error.message 
+    });
+  }
+};
+
+// Get all attempts (admin only)
+exports.getAllAttempts = async (req, res) => {
+  try {
+    const attempts = await Attempt.find({})
+      .sort({ startTime: -1 })
+      .lean();
+
+    res.status(200).json({
+      success: true,
+      count: attempts.length,
+      attempts
+    });
+
+  } catch (error) {
+    console.error('Error fetching all attempts:', error);
     res.status(500).json({ 
       success: false, 
       message: 'Server error', 

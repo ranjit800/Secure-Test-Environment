@@ -82,9 +82,9 @@ class EventLoggerService {
   }
 
   // Stop sync
-  stopSync() {
+  async stopSync() {
     if (this.timerId) clearInterval(this.timerId);
-    this.syncEvents(); // Final sync
+    await this.syncEvents(); // Final sync
   }
 
   // Sync events to backend

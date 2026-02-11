@@ -4,6 +4,7 @@ import useTestStore from './store/testStore';
 import StartPage from './pages/StartPage';
 import TestPage from './pages/TestPage';
 import ResultPage from './pages/ResultPage';
+import DashboardPage from './pages/DashboardPage';
 import BrowserEnforcer from './components/BrowserEnforcer';
 import ViolationCounter from './components/ViolationCounter';
 import FullscreenWarning from './components/FullscreenWarning';
@@ -48,6 +49,8 @@ const App = () => {
         />
         
         <Route path="/result" element={<ResultPage />} />
+        
+        <Route path="/dashboard" element={<DashboardPage />} />
         
         {/* Catch all redirect */}
         <Route path="*" element={<Navigate to="/" replace />} />
