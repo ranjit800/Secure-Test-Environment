@@ -1,16 +1,37 @@
-# React + Vite
+# Secure Test Environment - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based secure testing interface with advanced browser enforcement features.
 
-Currently, two official plugins are available:
+## Features
+- **Browser Enforcement**: Detects tab switching, window blur, and fullscreen exit.
+- **Event Logging**: Tracks all user actions and violations.
+- **Offline Support**: Queues events when offline and syncs when online.
+- **Security**: Blocks copy/paste, context menu, and text selection.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Prerequisites
+- Node.js (v16+)
+- Backend server running on port 5000
 
-## React Compiler
+## Quick Start
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-## Expanding the ESLint configuration
+2. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+3. Open http://localhost:5173 to view the app.
+
+## Project Structure
+- `/src/components` - UI and Logic components (BrowserEnforcer, ViolationCounter)
+- `/src/services` - API and Event Logging services
+- `/src/store` - Global state management (Zustand)
+- `/src/pages` - Route pages (Start, Test, Result)
+
+## Key Components
+- `BrowserEnforcer.jsx`: The core security component that monitors browser events.
+- `EventLogger.js`: Service that queues and syncs events to the backend.
